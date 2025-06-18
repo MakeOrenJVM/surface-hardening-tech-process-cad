@@ -22,7 +22,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <TextField>
+            <TextField fx:id="authorTextFieldId">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -35,7 +35,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <TextField>
+            <TextField fx:id="nameProjectTextFieldId">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

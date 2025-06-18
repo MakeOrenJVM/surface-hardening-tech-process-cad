@@ -10,8 +10,18 @@ public class HardeningResult {
     private double detailSpeed;
     private String coolingMedium;
 
+    public Hardness getHardness() {
+        return hardness;
+    }
+
+    public Generator getGenerator() {
+        return generator;
+    }
+
+    private Hardness hardness;
+
     public HardeningResult(Generator generator, int heatingTemperature, int temperingTemperature, double power,
-                           double frequency, double detailSpeed, String coolingMedium) {
+                           double frequency, double detailSpeed, String coolingMedium, Hardness hardness) {
         this.generator = generator;
         this.heatingTemperature = heatingTemperature;
         this.temperingTemperature = temperingTemperature;
@@ -19,6 +29,7 @@ public class HardeningResult {
         this.frequency = frequency;
         this.detailSpeed = detailSpeed;
         this.coolingMedium = coolingMedium;
+        this.hardness = hardness;
     }
 
     public int getHeatingTemperature() {

@@ -199,7 +199,7 @@ public class Controller {
     @FXML
     void runCalculate(ActionEvent event) {
         HardeningResult hardeningResult = null;
-
+        HardeningParameters hardeningParameters = null;
 
         try {
             // 1. Получаем марку стали из ComboBox
@@ -232,7 +232,11 @@ public class Controller {
             }
             System.out.println(coolingMedium);
 
+            Hardness hardness = getHardnessByGradeFromDB(grade);
+            System.out.println(hardness.max + " харднес");
+
             // 3. Получаем остальные параметры
+            String partName = partNameComboBox.getValue();
             Integer diameter = diameterSpinner.getValue();  // мм
             Integer length = lengthSpinner.getValue();      // мм
             Double depth = Double.valueOf(quenchDepthsComboBox.getValue()); // мм
@@ -256,6 +260,16 @@ public class Controller {
             double detailSpeed = calculator.calculateDetailSpeed(length, timeSeconds);
             double heatingRate = calculator.calculateHeatingRate(heatingTemp, timeSeconds);
             double productivity = calculator.calculateProductivity(diameter, detailSpeed);
+
+            //Передаем параметры в объект
+            hardeningParameters = new HardeningParameters(
+                    diameter,
+                    timeSeconds,
+                    length,
+                    depth,
+                    grade,
+                    partName
+            );
 
             //Подбираем генератор
             List<Generator> generators = loadGeneratorsFromDatabase(Connector.getConnection());
@@ -281,7 +295,8 @@ public class Controller {
                     totalPower,
                     optimalFreq / 1000,
                     detailSpeed,
-                    coolingMedium);
+                    coolingMedium,
+                    hardness);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -292,7 +307,7 @@ public class Controller {
             Parent root = loader.load();
 
             ResultsFormController resultsFormController = loader.getController();
-            resultsFormController.setResult(hardeningResult);
+            resultsFormController.setResult(hardeningResult, hardeningParameters);
 
 
             Stage resultsStage = new Stage();
@@ -417,6 +432,34 @@ public class Controller {
                         (g.getPowerKw() - requiredPowerKw) + (g.getFrequencyKHz() - requiredFrequencyKHz)
                 ))
                 .orElse(null);
+    }
+
+    private Hardness getHardnessByGradeFromDB(String gradeName) {
+        Hardness hardness = null;
+
+        String query = "SELECT hardness_min, hardness_max FROM steel_grades WHERE steel_grade = ?";
+
+
+
+        try (Connection conn = Connector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+
+            pstmt.setString(1, gradeName);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                   hardness = new Hardness(
+                            rs.getInt("hardness_max"),
+                            rs.getInt("hardness_min"));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return hardness;
     }
 
 }

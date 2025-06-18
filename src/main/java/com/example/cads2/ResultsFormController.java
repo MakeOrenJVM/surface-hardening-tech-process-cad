@@ -6,9 +6,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
+
 public class ResultsFormController {
 
     HardeningResult result;
+    HardeningParameters parameters;
+
+    @FXML
+    private TextField authorTextFieldId;
+
+    @FXML
+    private TextField nameProjectTextFieldId;
 
     @FXML
     private TextField coolingMediumTextFieldId;
@@ -44,12 +53,17 @@ public class ResultsFormController {
     void exportWordButton(ActionEvent event) {
         Stage stage = (Stage) exportWordButtonId.getScene().getWindow();
 
-        new WordExporter(stage).export(result);
+        String author = authorTextFieldId.getText();
+        String projectName = nameProjectTextFieldId.getText();
+        LocalDate date = LocalDate.now();
+
+        new WordExporter(stage).export(result, parameters, author, projectName, date);
     }
 
 
 
-    public void setResult(HardeningResult result) {
+    public void setResult(HardeningResult result, HardeningParameters parameters) {
+        this.parameters = parameters;
         this.result = result;
         displayData();
 
