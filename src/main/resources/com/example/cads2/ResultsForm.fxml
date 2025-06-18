@@ -40,7 +40,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="46.0" prefWidth="247.0" text="Сохранить проект в базу данных">
+            <Button fx:id="saveInBdButtonId" mnemonicParsing="false" onAction="#saveInBdButton" prefHeight="46.0" prefWidth="247.0" text="Сохранить проект в базу данных">
                <font>
                   <Font size="15.0" />
                </font>

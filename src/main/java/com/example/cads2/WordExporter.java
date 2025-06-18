@@ -32,7 +32,7 @@ public class WordExporter {
         File file = fileChooser.showSaveDialog(primaryStage);
 
         if (file != null) {
-            writeToFile(result,parameters, author, projectName, date, file.getAbsolutePath());
+            writeToFile(result, parameters, author, projectName, date, file.getAbsolutePath());
             System.out.println("Файл успешно сохранён: " + file.getAbsolutePath());
         } else {
             System.out.println("Сохранение отменено.");
@@ -62,7 +62,7 @@ public class WordExporter {
             infoRun.addBreak();
             infoRun.setText("Дата проектирования: " + date.toString());
             infoRun.addBreak();
-            infoRun.setText("Тип детали: " + parameters.getPartName()) ;
+            infoRun.setText("Тип детали: " + parameters.getPartName());
             infoRun.addBreak();
             infoRun.setText("Марка стали: " + parameters.getSteelGrade());
             infoRun.addBreak();
@@ -74,19 +74,19 @@ public class WordExporter {
 
             // Заголовок таблицы
             XWPFTableRow headerRow = table.getRow(0);
-            headerRow.getCell(0).setText("№ п/п");
-            headerRow.addNewTableCell().setText("Наименование операции");
-            headerRow.addNewTableCell().setText("Содержание операции");
-            headerRow.addNewTableCell().setText("Технологические параметры");
+            setCellTextWithFont(headerRow.getCell(0), "№ п/п");
+            setCellTextWithFont(headerRow.addNewTableCell(), "Наименование операции");
+            setCellTextWithFont(headerRow.addNewTableCell(), "Содержание операции");
+            setCellTextWithFont(headerRow.addNewTableCell(), "Технологические параметры");
 
             List<String[]> operations = loadOperationsWithParams(result, parameters);
             int index = 1;
             for (String[] operation : operations) {
                 XWPFTableRow row = table.createRow();
-                row.getCell(0).setText(String.valueOf(index++));
-                row.getCell(1).setText(operation[0]);
-                row.getCell(2).setText(operation[1]);
-                row.getCell(3).setText(operation[2]);
+                setCellTextWithFont(row.getCell(0), String.valueOf(index++));
+                setCellTextWithFont(row.getCell(1), operation[0]);
+                setCellTextWithFont(row.getCell(2), operation[1]);
+                setCellTextWithFont(row.getCell(3), operation[2]);
             }
 
             try (FileOutputStream out = new FileOutputStream(filePath)) {
@@ -95,6 +95,16 @@ public class WordExporter {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setCellTextWithFont(XWPFTableCell cell, String text) {
+        // Очистим существующий текст
+        cell.removeParagraph(0);
+        XWPFParagraph p = cell.addParagraph();
+        XWPFRun run = p.createRun();
+        run.setFontFamily("Times New Roman");
+        run.setFontSize(12);
+        run.setText(text);
     }
 
     private List<String[]> loadOperationsWithParams(HardeningResult result, HardeningParameters parameters) {
@@ -145,7 +155,7 @@ public class WordExporter {
                         operations.add(new String[]{
                                 "Контроль твёрдости",
                                 rs.getString("hardness_control"),
-                                String.format("Ожидаемая твердость: %d - %d%nОжидаемая глубина закалки: %.1f",
+                                String.format("Ожидаемая твердость: %d HRC - %d HRC%nОжидаемая глубина закалки: %.1f мм",
                                         result.getHardness().min,
                                         result.getHardness().max,
                                         parameters.getQuenchDepths())
@@ -160,3 +170,4 @@ public class WordExporter {
         return operations;
     }
 }
+

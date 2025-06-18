@@ -233,7 +233,7 @@ public class Controller {
             System.out.println(coolingMedium);
 
             Hardness hardness = getHardnessByGradeFromDB(grade);
-            System.out.println(hardness.max + " харднес");
+
 
             // 3. Получаем остальные параметры
             String partName = partNameComboBox.getValue();
@@ -308,6 +308,7 @@ public class Controller {
 
             ResultsFormController resultsFormController = loader.getController();
             resultsFormController.setResult(hardeningResult, hardeningParameters);
+
 
 
             Stage resultsStage = new Stage();
