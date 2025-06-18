@@ -21,6 +21,8 @@ public class ProjectsListController {
     @FXML
     private Button chooseButtonId;
 
+    @FXML
+    private Button deleteButtonId;
 
     @FXML
     private TableColumn<Project, String> authorColumn;
@@ -53,7 +55,7 @@ public class ProjectsListController {
     private TableView<Project> projectsTable;
 
     @FXML
-    private ComboBox<Double> quenchDepthsComboBox;
+    private ComboBox<String> quenchDepthsComboBox;
 
     @FXML
     private ComboBox<String> steelGradeComboBox;
@@ -80,13 +82,54 @@ public class ProjectsListController {
     private TextField coolingMediumTextFieldId;
 
     @FXML
+    void deleteButton(ActionEvent event) {
+        Project selectedProject = projectsTable.getSelectionModel().getSelectedItem();
+
+        if (selectedProject == null) {
+            new Alert(Alert.AlertType.WARNING, "Сначала выберите проект для удаления.").show();
+            return;
+        }
+
+        // Подтверждение удаления
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmAlert.setTitle("Подтверждение удаления");
+        confirmAlert.setHeaderText(null);
+        confirmAlert.setContentText("Вы уверены, что хотите удалить проект \"" + selectedProject.getName() + "\"?");
+
+        if (confirmAlert.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
+            return; // Пользователь отменил удаление
+        }
+
+        // Удаление из базы
+        String deleteQuery = "DELETE FROM project WHERE id = ?";
+
+        try (Connection conn = Connector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(deleteQuery)) {
+
+            pstmt.setInt(1, selectedProject.getId());
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                new Alert(Alert.AlertType.INFORMATION, "Проект успешно удалён.").show();
+                loadAndDisplayProjects(); // Обновляем таблицу
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Ошибка удаления проекта из базы.").show();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Ошибка при удалении проекта из базы данных.").show();
+        }
+    }
+
+    @FXML
     void onBackButton(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/cads2/view.fxml"));
         Parent root = loader.load();
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root, 300, 520)); // Укажи нужные размеры
-        stage.setTitle("Поверхностная закалка");
+        stage.setTitle("САПР ТП поверхностной закалки");
         stage.show();
 
         // Закрываем текущее окно
@@ -227,6 +270,16 @@ public class ProjectsListController {
 
     @FXML
     public void initialize() {
+
+        List<String> grades = fetchSteelGradesFromDB();
+        steelGradeComboBox.setItems(FXCollections.observableArrayList(grades));
+
+        List<String> depths = fetchQuenchDepthsFromDB();
+        quenchDepthsComboBox.setItems(FXCollections.observableArrayList(depths));
+
+        List<String> parts = fetchPartsFromDB();
+        partNameComboBox.setItems(FXCollections.observableArrayList(parts));
+
         setupTableColumns();
         loadAndDisplayProjects();
 
@@ -281,7 +334,7 @@ public class ProjectsListController {
 
                     partNameComboBox.setValue(rs.getString("part_name"));
                     steelGradeComboBox.setValue(rs.getString("steel_grade"));
-                    quenchDepthsComboBox.setValue(rs.getDouble("depth_mm"));
+                    quenchDepthsComboBox.setValue(String.valueOf(rs.getDouble("depth_mm")));
 
                     // Результаты расчёта
                     freqTextFieldId.setText(String.valueOf(rs.getDouble("process_frequency_khz")));
@@ -475,5 +528,67 @@ public class ProjectsListController {
         }
 
         return heatingTemp;
+    }
+
+    private List<String> fetchSteelGradesFromDB() {
+        List<String> grades = new ArrayList<>();
+
+        String query = "select steel_grade from steel_grades";
+
+        try (Connection conn = Connector.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                grades.add(rs.getString("steel_grade"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return grades;
+    }
+
+
+    private List<String> fetchQuenchDepthsFromDB() {
+        List<String> depths = new ArrayList<>();
+
+        String query = "select depth_mm from quench_depths";
+
+        try (Connection conn = Connector.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                depths.add(rs.getString("depth_mm"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return depths;
+
+    }
+
+    private List<String> fetchPartsFromDB() {
+        List<String> parts = new ArrayList<>();
+
+        String query = "select part_name from operation_card";
+
+        try (Connection conn = Connector.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                parts.add(rs.getString("part_name"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return parts;
     }
 }

@@ -113,7 +113,7 @@
                   <Insets top="15.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="344.0" text="Удалить">
+            <Button fx:id="deleteButtonId" mnemonicParsing="false" onAction="#deleteButton" prefHeight="38.0" prefWidth="344.0" text="Удалить">
                <font>
                   <Font size="14.0" />
                </font>

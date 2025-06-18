@@ -23,6 +23,9 @@ public class Controller {
     private Button calculateButton;
 
     @FXML
+    private MenuItem operationButtonId;
+
+    @FXML
     private Spinner<Integer> diameterSpinner;
 
     @FXML
@@ -336,6 +339,28 @@ public class Controller {
             Stage resultsStage = new Stage();
             resultsStage.setScene(new Scene(root,1000,600));
             resultsStage.setTitle("Результаты расчёта");
+
+            // Показываем новое окно
+            resultsStage.show();
+
+            // Скрываем главное окно (откуда пришли)
+            Stage currentStage = (Stage)partNameComboBox.getScene().getWindow(); // menuBar — любой элемент из главной сцены
+            currentStage.close();
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    void operationButton(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("OperationForm.fxml"));
+        try {
+            Parent root = loader.load();
+            Stage resultsStage = new Stage();
+            resultsStage.setScene(new Scene(root,700,600));
+            resultsStage.setTitle("Шаблоны операций");
 
             // Показываем новое окно
             resultsStage.show();

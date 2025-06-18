@@ -78,6 +78,7 @@
           <Menu mnemonicParsing="false" text="Меню">
             <items>
                   <MenuItem fx:id="projectsListButton" mnemonicParsing="false" onAction="#projectsListButtonClicked" text="Сохраненные проекты" />
+                  <MenuItem fx:id="operationButtonId" mnemonicParsing="false" onAction="#operationButton" text="Шаблоны операций" />
               <MenuItem mnemonicParsing="false" text="Закрыть" />
             </items>
           </Menu>

@@ -65,7 +65,7 @@ public class ResultsFormController {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root, 300, 520));
-            stage.setTitle("Поверхностная закалка");
+            stage.setTitle("САПР ТП поверхностной закалки");
             stage.show();
 
             // Закрываем текущее окно

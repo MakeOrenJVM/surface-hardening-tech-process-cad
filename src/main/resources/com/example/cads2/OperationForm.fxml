@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cads2.OperationFormController">
+   <children>
+      <VBox layoutX="61.0" layoutY="114.0" prefHeight="442.0" prefWidth="724.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <children>
+            <ComboBox fx:id="partNameComboBox" prefHeight="26.0" prefWidth="305.0" />
+            <Label text="Тип детали">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="partNameTextField" />
+            <Label text="Подготовка детали">
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="prep_surface" />
+            <Label text="Установка детали">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="setup" />
+            <Label text="Нагрев">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="induction_heating" />
+            <Label text="Закалка">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="quenching" />
+            <Label text="Отпуск">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tempering" />
+            <Label text="Охлаждение после отпуска">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="post_tempering_cooling" />
+            <Label text="Контроль качества">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="hardness_control" />
+         </children>
+      </VBox>
+      <HBox layoutX="162.0" layoutY="477.0" prefHeight="100.0" prefWidth="544.0" AnchorPane.leftAnchor="15.0">
+         <children>
+            <Button fx:id="addButtonId" mnemonicParsing="false" onAction="#addButton" prefHeight="48.0" prefWidth="147.0" text="Добавить">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="updateButtonId" mnemonicParsing="false" onAction="#updateButtonId" prefHeight="48.0" prefWidth="147.0" text="Изменить">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="deleteButtonId" mnemonicParsing="false" onAction="#deleteButton" prefHeight="48.0" prefWidth="147.0" text="Удалить">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <Button fx:id="onBackButtonId" layoutX="652.0" layoutY="527.0" mnemonicParsing="false" onAction="#onBackButton" prefHeight="48.0" prefWidth="147.0" text="Назад" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
