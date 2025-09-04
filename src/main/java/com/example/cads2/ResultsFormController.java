@@ -23,6 +23,8 @@ public class ResultsFormController {
     HardeningResult result;
     HardeningParameters parameters;
 
+    @FXML
+    private Button exportPdfButtonId;
 
     @FXML
     private Button saveInBdButtonId;
@@ -86,6 +88,17 @@ public class ResultsFormController {
         LocalDate date = LocalDate.now();
 
         new WordExporter(stage).export(result, parameters, author, projectName, date);
+    }
+
+    @FXML
+    void exportPdfButton(ActionEvent event) {
+        Stage stage = (Stage) exportPdfButtonId.getScene().getWindow(); // получаем текущее окно
+
+        String author = authorTextFieldId.getText();
+        String projectName = nameProjectTextFieldId.getText();
+        LocalDate date = LocalDate.now();
+
+        new PdfExporter(stage).export(result, parameters, author, projectName, date);
     }
 
     @FXML

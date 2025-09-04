@@ -53,7 +53,7 @@
       <VBox layoutY="246.0" prefHeight="124.0" prefWidth="380.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="15.0">
          <children>
             <Button fx:id="exportWordButtonId" mnemonicParsing="false" onAction="#exportWordButton" prefHeight="46.0" prefWidth="468.0" text="Спроектировать операционную карту и экспортировать в DOCX" />
-            <Button mnemonicParsing="false" prefHeight="46.0" prefWidth="468.0" text="Спроектировать операционную карту и экспортировать в PDF">
+            <Button fx:id="exportPdfButtonId" mnemonicParsing="false" onAction="#exportPdfButton" prefHeight="46.0" prefWidth="468.0" text="Спроектировать операционную карту и экспортировать в PDF">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
