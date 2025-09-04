@@ -19,7 +19,7 @@ JavaFX-приложение для расчёта и ведения технол
       mysql -u admin -p
       CREATE DATABASE sapr_bd;
     - Импортируйте дамп:
-      mysql -u admin -p sapr_bd < sapr_bd_dump.sql
+      mysql -u admin -p sapr_bd < db/sapr_bd_dump.sql
 
    > Важно: для корректной работы проекта логин MySQL должен быть `admin`, а пароль — `root`.
 
@@ -27,4 +27,5 @@ JavaFX-приложение для расчёта и ведения технол
 
 ## Репозиторий
 https://github.com/MakeOrenJVM/surface-hardening-tech-process-cad
+
 
