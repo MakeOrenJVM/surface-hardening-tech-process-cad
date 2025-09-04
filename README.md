@@ -1,75 +1,32 @@
-# surface-hardening-tech-process-cad
+Surface Hardening CAD
 
-A Java-based CAD system for designing and analyzing technological processes of surface hardening.
+JavaFX-приложение для расчёта и ведения технологических процессов поверхностной закалки стальных деталей.
 
-## Technologies
-- Java 17
-- JavaFX
-- PostgreSQL
-- FXML
-- JUnit 5, Mockito
-- PDF Export (iText or similar)
+Возможности
 
-## Features
-- Designing and editing surface hardening process parameters
-- Simulation of heat distribution and thermal analysis
-- Visualization of charts and hardening process diagrams
-- Export of process data and results to PDF
-- JavaFX-based user interface
+Расчёт параметров закалки (частота, мощность, скорость перемещения и др.).
 
-Note: User authentication and registration are not implemented (single-user mode)
+Ручной ввод времени нагрева.
 
-## Project Structure
-- `domain` — data models
-- `service` — business logic
-- `infrastructure` — data access layer
-- `ui` — JavaFX user interface
+Работа с базой данных MySQL.
 
-## Testing
-- Unit testing with JUnit 5
-- Mocking with Mockito
-- Fluent assertions with AssertJ
+Экспорт результатов в Word и PDF.
 
-## How to Run
-1. Clone the repository
-2. Configure PostgreSQL in `application.properties`
-3. Run the application from IntelliJ IDEA or as a `.jar` / `.exe` file
+Редактирование проектов и операций.
 
----
+Запуск
 
-# САПР Технологического Процесса Поверхностной Закалки
+Клонировать репозиторий:
 
-Программная система на Java для проектирования и анализа технологических процессов поверхностной закалки.
+git clone https://github.com/MakeOrenJVM/surface-hardening-tech-process-cad.git
 
-## Технологии
-- Java 17
-- JavaFX
-- PostgreSQL
-- FXML
-- JUnit 5, Mockito
-- Экспорт в PDF (iText или аналогичная библиотека)
 
-## Функциональность
-- Проектирование и редактирование параметров закалки
-- Моделирование распределения температуры и тепловой анализ
-- Построение графиков и схем процесса
-- Экспорт данных и результатов в PDF
-- Интерфейс на JavaFX
+Настроить MySQL (создать базу).
 
-Примечание: регистрация и авторизация пользователей не реализованы (однопользовательский режим)
+Указать параметры подключения к базе.
 
-## Структура проекта
-- `domain` — модели данных
-- `service` — бизнес-логика
-- `infrastructure` — доступ к данным
-- `ui` — пользовательский интерфейс на JavaFX
+Запустить Main.java.
 
-## Тестирование
-- Unit-тесты с использованием JUnit 5
-- Подмена зависимостей через Mockito
-- Утверждения с использованием AssertJ
+Автор
 
-## Запуск проекта
-1. Клонировать репозиторий
-2. Настроить подключение к PostgreSQL в `application.properties`
-3. Запустить приложение через IntelliJ IDEA или как `.jar` / `.exe` файл
+Дипломный проект: «Разработка САПР технологического процесса поверхностной закалки».
